@@ -1,3 +1,11 @@
+# 
+# File Name: AcroSensei
+# Version: 1.0
+# Author: Justin Luo
+# Last Updated: 6/3/2023
+# This is the first version of AcroSensei, an easy to use tool to help people 
+# look up acronym definitions using web crawler technology
+#
 import requests
 import bs4
 import re
@@ -24,12 +32,15 @@ if res.status_code == 200:
 
     # Searching for the inputted acronym within the page text
     found_definitions = []
+    
     for li in soup.find_all("li"):
         acronym_text = li.text.strip().lower()
+        new_acronym = ''
         if acronym_text.startswith(x) and x in acronym_text.split():
             # Remove text within parentheses using regular expressions
-            acronym_text = re.sub(r'\([^()]*\)', '', acronym_text)
-            found_definitions.append(acronym_text.strip())
+            new_acronym = re.sub(r'\([^()]*\)', '', acronym_text)
+            final_acronym = new_acronym.strip()
+            found_definitions.append(final_acronym)
 
     # Sort the definitions in alphabetical order
     found_definitions.sort()
